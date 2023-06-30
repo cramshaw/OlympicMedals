@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Olympics apps
+    "olympic_data.apps.OlympicDataConfig",
 ]
 
 MIDDLEWARE = [
