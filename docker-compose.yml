@@ -1,11 +1,33 @@
 version: "3.9"
 
+x-database-creds: &database-creds
+  - POSTGRES_PASSWORD=verysecretpassword
+  - POSTGRES_USER=DataTruth
+  - POSTGRES_DB=DataTruth
+
 services:
+  backend:
+    image: olympics-be
+    ports:
+      - 8000:8000
+    tty: true
+    stdin_open: true
+    volumes: # Only for dev
+      - ./server:/app
+    environment:
+      *database-creds
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   postgres:
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=verysecretpassword
-      - POSTGRES_USER=DataTruth
-      - POSTGRES_DB=DataTruth
+      *database-creds
     ports:
       - "5432:5432"
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U DataTruth"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
