@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=verysecretpassword
+      - POSTGRES_USER=DataTruth
+      - POSTGRES_DB=DataTruth
+    ports:
+      - "5432:5432"
