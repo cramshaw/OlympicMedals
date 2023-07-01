@@ -7,10 +7,10 @@ from olympic_data.models import (
     Event,
     Games,
     MedalWin,
+    Sport,
 )
 
 
-# Register your models here.
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     ...
@@ -43,4 +43,9 @@ class AthleteAdmin(admin.ModelAdmin):
 
 @admin.register(MedalWin)
 class MedalWinAdmin(admin.ModelAdmin):
+    ...
+
+
+@admin.register(Sport)
+class SportAdmin(admin.ModelAdmin):
     ...

@@ -93,6 +93,65 @@ def test_process_medal_row_nothing_exists(example_row):
 
 
 @pytest.mark.django_db
+def test_process_medal_row_multiple_athletes_added(example_row):
+    """
+    Ensure that all athletes who won an event are recorded on that event
+    """
+    CountryFactory(country_code="CHN")
+    assert City.objects.count() == 0
+    assert Games.objects.count() == 0
+    assert Sport.objects.count() == 0
+    assert Discipline.objects.count() == 0
+    assert Event.objects.count() == 0
+    assert Athlete.objects.count() == 0
+    assert MedalWin.objects.count() == 0
+
+    process_medal_row(example_row)
+    example_row["Athlete"] = "Dave's mate"
+    process_medal_row(example_row)
+
+    assert City.objects.count() == 1
+    assert Games.objects.count() == 1
+    assert Sport.objects.count() == 1
+    assert Discipline.objects.count() == 1
+    assert Event.objects.count() == 1
+    assert Athlete.objects.count() == 2
+    assert MedalWin.objects.count() == 1
+
+    assert MedalWin.objects.first().athletes.count() == 2
+
+
+@pytest.mark.django_db
+def test_process_medal_row_multiple_athletes_different_gender(example_row):
+    """
+    Ensure that athletes are only added to wins for the correct gender
+    """
+    CountryFactory(country_code="CHN")
+    assert City.objects.count() == 0
+    assert Games.objects.count() == 0
+    assert Sport.objects.count() == 0
+    assert Discipline.objects.count() == 0
+    assert Event.objects.count() == 0
+    assert Athlete.objects.count() == 0
+    assert MedalWin.objects.count() == 0
+
+    process_medal_row(example_row)
+    example_row["Athlete"] = "Katerina Rostova"
+    example_row["Gender"] = "Women"
+    process_medal_row(example_row)
+
+    assert City.objects.count() == 1
+    assert Games.objects.count() == 1
+    assert Sport.objects.count() == 1
+    assert Discipline.objects.count() == 1
+    assert Event.objects.count() == 2
+    assert Athlete.objects.count() == 2
+    assert MedalWin.objects.count() == 2
+
+    assert MedalWin.objects.first().athletes.count() == 1
+
+
+@pytest.mark.django_db
 def test_process_medal_row_games_exist(example_row):
     games = GamesFactory()
     assert Games.objects.count() == 1
@@ -139,6 +198,7 @@ def test_process_medal_row_event_exists(example_row):
     assert Event.objects.count() == 1
     assert MedalWin.objects.count() == 0
     example_row["Event"] = event.event_name
+    example_row["Gender"] = event.gender
     example_row["Discipline"] = event.discipline.discipline_name
     example_row["Sport"] = event.discipline.sport.sport_name
 
@@ -166,14 +226,16 @@ def test_process_medal_row_athlete_exists(example_row):
 @pytest.mark.django_db
 def test_process_medal_row_medal_exists(example_row):
     medal_win = MedalWinFactory()
+    athlete = AthleteFactory(country=medal_win.country)
+    medal_win.athletes.add(athlete)
     assert MedalWin.objects.count() == 1
     example_row["Year"] = medal_win.games.year
     example_row["City"] = medal_win.games.city.city_name
     example_row["Sport"] = medal_win.event.discipline.sport.sport_name
     example_row["Discipline"] = medal_win.event.discipline.discipline_name
-    example_row["Athlete"] = medal_win.athlete.athlete_name
-    example_row["Country"] = medal_win.athlete.country.country_code
-    example_row["Gender"] = medal_win.athlete.gender.capitalize()
+    example_row["Athlete"] = athlete.athlete_name
+    example_row["Gender"] = athlete.gender.capitalize()
+    example_row["Country"] = medal_win.country.country_code
     example_row["Event"] = medal_win.event.event_name
     example_row["Medal"] = medal_win.medal_type.capitalize()
 

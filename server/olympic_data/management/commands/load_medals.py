@@ -24,6 +24,9 @@ def process_medal_row(row: dict):
     Method to check required fields are included and create/update
 
     :param row: Row of CSV file
+
+    N.B. If speed were important using a bulk create would improve the performance
+    but would add to code complexity.
     """
 
     for key in [
@@ -52,10 +55,6 @@ def process_medal_row(row: dict):
     discipline, created = Discipline.objects.get_or_create(
         discipline_name=row["Discipline"], sport=sport
     )
-    # Get or create event
-    event, created = Event.objects.get_or_create(
-        event_name=row["Event"], discipline=discipline
-    )
 
     # Get country
     try:
@@ -71,12 +70,24 @@ def process_medal_row(row: dict):
         athlete_name=row["Athlete"], gender=gender, country=country
     )
 
+    # Get or create event
+    event, created = Event.objects.get_or_create(
+        event_name=row["Event"], discipline=discipline, gender=gender
+    )
+
     # Get or create medal
     medal_type = row["Medal"].upper()
 
     medal, created = MedalWin.objects.get_or_create(
-        athlete=athlete, event=event, games=games, medal_type=medal_type
+        country=country,
+        event=event,
+        games=games,
+        medal_type=medal_type,
     )
+
+    # Add the athlete to the medal win
+    # This command is for load, not sync, so won't remove athletes
+    medal.athletes.add(athlete)
 
     return medal, created
 

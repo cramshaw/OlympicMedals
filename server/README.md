@@ -29,4 +29,31 @@ docker compose run --entrypoint="python" backend manage.py load_medals --file_pa
 
 # TODO: UPDATE ME
 
+# Notes
+
+Romania - ROM ROU
+Serbia - SCG SRB
+Pending results
+Mixed events
+
 # Creating a user/viewing admin
+
+# API docs
+
+/api/v1/medal-table/<YEAR>/
+
+Returns
+
+```
+[
+    {
+        "country_name": "Argentina",
+        "country_code": "ARG",
+        "gold_medal_count": 1,
+        "silver_medal_count": 2,
+        "bronze_medal_count": 1
+    }
+]
+```
+
+# ADMIN

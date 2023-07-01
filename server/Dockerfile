@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update
 
-# Install virtual env
+# Avoid installing pipenv in final image
 RUN pip install --user pipenv
 ENV PIPENV_VENV_IN_PROJECT=1
 

@@ -65,10 +65,12 @@ class EventFactory(factory.django.DjangoModelFactory):
         django_get_or_create = (
             "event_name",
             "discipline",
+            "gender",
         )
 
     event_name = factory.Iterator(["10m Springboard", "60Kg", "Shooting"])
     discipline = factory.SubFactory(DisciplineFactory)
+    gender = factory.Iterator([c[0] for c in Athlete.Gender.choices])
 
 
 class AthleteFactory(factory.django.DjangoModelFactory):
@@ -85,7 +87,8 @@ class MedalWinFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = MedalWin
 
-    athlete = factory.SubFactory(AthleteFactory)
+    # athlete = factory.SubFactory(AthleteFactory) # TODO: Post create
+    country = factory.SubFactory(CountryFactory)
     event = factory.SubFactory(EventFactory)
     games = factory.SubFactory(GamesFactory)
     medal_type = factory.Iterator([c[0] for c in MedalWin.Medals.choices])
