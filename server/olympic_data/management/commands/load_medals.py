@@ -25,18 +25,22 @@ def process_medal_row(row: dict):
 
     :param row: Row of CSV file
     """
+
     for key in [
         "Year",
         "City",
         "Sport",
         "Discipline",
         "Athlete",
-        "Country",
         "Gender",
         "Event",
         "Medal",
     ]:
         check_required_present(row, key)
+
+    # Skip rows with a pending result
+    if row.get("Athlete").lower() == "pending":
+        return None, False
 
     # Get or create city
     city, created = City.objects.get_or_create(city_name=row["City"])
@@ -54,9 +58,13 @@ def process_medal_row(row: dict):
     )
 
     # Get country
-    country = Country.objects.get(
-        country_code=row.get("Country"),
-    )
+    try:
+        country = Country.objects.get(
+            country_code=row.get("Country"),
+        )
+    except Country.DoesNotExist:
+        return None, False
+
     # Get or create athlete
     gender = row["Gender"].upper()
     athlete, created = Athlete.objects.get_or_create(

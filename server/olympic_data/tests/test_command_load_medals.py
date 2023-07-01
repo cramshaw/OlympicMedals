@@ -50,7 +50,6 @@ def example_row():
         "Sport",
         "Discipline",
         "Athlete",
-        "Country",
         "Gender",
         "Event",
         "Medal",
@@ -184,12 +183,27 @@ def test_process_medal_row_medal_exists(example_row):
 
 
 @pytest.mark.django_db
+def test_process_medal_row_pending(example_row):
+    """
+    Not all rows have an athlete, handle by skipping
+    """
+    assert MedalWin.objects.count() == 0
+    example_row["Athlete"] = "Pending"
+
+    process_medal_row(example_row)
+
+    assert MedalWin.objects.count() == 0
+
+
+@pytest.mark.django_db
 def test_process_medal_row_missing_country(example_row):
+    """
+    Test that we skip without breaking as some rows are missing countries
+    """
     assert MedalWin.objects.count() == 0
     example_row["Country"] = "badcountrycode"
 
-    with pytest.raises(Country.DoesNotExist):
-        process_medal_row(example_row)
+    process_medal_row(example_row)
 
     assert MedalWin.objects.count() == 0
 
