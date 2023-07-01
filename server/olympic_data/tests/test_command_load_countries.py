@@ -1,6 +1,6 @@
 import pytest
 from django.core.management import call_command
-from olympic_data.management.commands.load_countries import process_row
+from olympic_data.management.commands.load_countries import process_country_row
 from olympic_data.models import Country
 from olympic_data.tests.factories import CountryFactory
 from django.core.management.base import CommandError
@@ -38,31 +38,31 @@ def test_load_countries_country_loaded():
 
 
 @pytest.mark.django_db
-def test_process_row_country_missing():
+def test_process_country_row_country_missing():
     row = {
         "Code": "ARG",
         "Population": "43416755",
         "GDP per Capita": "13431.8783398577",
     }
     with pytest.raises(CommandError) as e:
-        process_row(row)
+        process_country_row(row)
         assert e.value.args[0] == "Row missing Country"
 
 
 @pytest.mark.django_db
-def test_process_row_code_missing():
+def test_process_country_row_code_missing():
     row = {
         "Country": "Argentina",
         "Population": "43416755",
         "GDP per Capita": "13431.8783398577",
     }
     with pytest.raises(CommandError) as e:
-        process_row(row)
+        process_country_row(row)
         assert e.value.args[0] == "Row missing Code"
 
 
 @pytest.mark.django_db
-def test_process_row_population_gdp_updated():
+def test_process_country_row_population_gdp_updated():
     row = {
         "Country": "Argentina",
         "Code": "ARG",
@@ -70,14 +70,14 @@ def test_process_row_population_gdp_updated():
         "GDP per Capita": "13431.8783398577",
     }
     CountryFactory(country_name=row["Country"], country_code=row["Code"], population=0)
-    country, created = process_row(row)
+    country, created = process_country_row(row)
     assert created is False
     assert country.population == row["Population"]
     assert country.gdp_per_capita == row["GDP per Capita"]
 
 
 @pytest.mark.django_db
-def test_process_row_created():
+def test_process_country_row_created():
     """
     Happy path test
     """
@@ -87,7 +87,7 @@ def test_process_row_created():
         "Population": "43416755",
         "GDP per Capita": "13431.8783398577",
     }
-    country, created = process_row(row)
+    country, created = process_country_row(row)
     assert created is True
     assert country.country_name == row["Country"]
     assert country.country_code == row["Code"]
@@ -96,7 +96,7 @@ def test_process_row_created():
 
 
 @pytest.mark.django_db
-def test_process_row_created_missing_data():
+def test_process_country_row_created_missing_data():
     """
     Happy path test
     """
@@ -106,7 +106,7 @@ def test_process_row_created_missing_data():
         "Population": "",
         "GDP per Capita": "",
     }
-    country, created = process_row(row)
+    country, created = process_country_row(row)
     assert created is True
     assert country.country_name == row["Country"]
     assert country.country_code == row["Code"]

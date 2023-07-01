@@ -5,19 +5,12 @@ from os.path import isfile
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from olympic_data.models import Country
+from .helpers import check_required_present
 
 logger = logging.getLogger(__name__)
 
 
-def check_required_present(row: dict, key: str):
-    """
-    Raise an error if a row is missing key fields
-    """
-    if not row.get(key):
-        raise CommandError(f"Row missing {key}", row)
-
-
-def process_row(row: dict):
+def process_country_row(row: dict):
     """
     Method to check required fields are included and create/update
 
@@ -58,8 +51,6 @@ class Command(BaseCommand):
 
         Atomic transaction to ensure we don't partially update data
         """
-        if not file_path:
-            raise CommandError("Please pass a file path with the arg --file_path.")
 
         if not isfile(file_path):
             raise CommandError(f"The path {file_path} does not contain a file.")
@@ -69,7 +60,7 @@ class Command(BaseCommand):
         with open(file_path) as fhand:
             csv_data = DictReader(fhand)
             for row in csv_data:
-                _, created = process_row(row)
+                _, created = process_country_row(row)
                 country_name = row.get("Country")
                 if created:
                     countries_created += 1

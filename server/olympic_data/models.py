@@ -28,11 +28,19 @@ class Games(models.Model):
         return f"{self.city}-{self.year}"
 
 
-class Discipline(models.Model):
-    discipline_name = models.CharField(max_length=200, null=False, blank=False)
+class Sport(models.Model):
+    sport_name = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return self.discipline_name
+        return self.sport_name
+
+
+class Discipline(models.Model):
+    discipline_name = models.CharField(max_length=200, null=False, blank=False)
+    sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.sport}-{self.discipline_name}"
 
 
 class Event(models.Model):
