@@ -27,7 +27,7 @@ def process_country_row(row: dict):
     }
 
     country, created = Country.objects.update_or_create(
-        country_name=row.get("Country"),
+        country_name=row.get("Country").strip("*"),
         country_code=row.get("Code"),
         defaults=defaults,
     )

@@ -112,3 +112,18 @@ def test_process_country_row_created_missing_data():
     assert country.country_code == row["Code"]
     assert country.population is None
     assert country.gdp_per_capita is None
+
+
+@pytest.mark.django_db
+def test_process_country_asterisk_stripped():
+    """
+    Happy path test
+    """
+    row = {
+        "Country": "Argentina*",
+        "Code": "ARG",
+        "Population": "",
+        "GDP per Capita": "",
+    }
+    country, created = process_country_row(row)
+    assert country.country_name == "Argentina"
