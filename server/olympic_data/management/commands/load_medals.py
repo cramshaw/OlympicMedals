@@ -71,6 +71,8 @@ def process_medal_row(row: dict):
     )
 
     # Get or create event
+    # TODO: Handle Mixed Doubles Badmintion and Mixed Doubles Tennis
+    # https://en.wikipedia.org/wiki/Category:Mixed_events_at_the_Summer_Olympics_by_year
     event, created = Event.objects.get_or_create(
         event_name=row["Event"], discipline=discipline, gender=gender
     )
