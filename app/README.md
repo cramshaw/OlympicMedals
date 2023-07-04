@@ -1,4 +1,4 @@
-# Frontend
+# Olympic Medal Frontend
 
 This is a [Vite.js](https://vitejs.dev/) based React application providing a frontend for Olympic Medal table.
 

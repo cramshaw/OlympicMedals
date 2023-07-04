@@ -52,7 +52,7 @@ const EnhancedTable: React.FC<EnhancedTableProps> = ({ data }) => {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="dataTable">
+          <Table aria-labelledby="dataTable">
             <EnhancedTableHead order={order} setOrder={setOrder} />
             <TableBody>
               {sortedRows.map((row) => {

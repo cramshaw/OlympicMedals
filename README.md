@@ -1,3 +1,5 @@
+# Readmes are provided with running instructions in both [server](./server/README.md) and [app](./app/README.md).
+
 ## DataTruth Programming Task
 
 So we can see how you'd fit in on our team, we'd like to see how you tackle new challenges.
@@ -41,8 +43,8 @@ We've provided you with:
 3. Load the raw data provided in `raw-data` into your datastore;
 4. Using **Python**, create a simple backend service that takes the raw data and transforms it into a list of countries, along with the number of Gold, Silver and Bronze medals they won during the 2012 Olympic Games.
 5. Serve the resulting data via an API endpoint.
-6. Create an *app* folder to contain your front end code;
-7. In the *app* directory, create a simple app that displays your derived data in a basic Olympic Medals table to be viewed in a browser or on a device;
+6. Create an _app_ folder to contain your front end code;
+7. In the _app_ directory, create a simple app that displays your derived data in a basic Olympic Medals table to be viewed in a browser or on a device;
 8. Commit your code and raise a pull request;
 9. Your code will be reviewed by one of our senior technical team and we will get back to you.
 
