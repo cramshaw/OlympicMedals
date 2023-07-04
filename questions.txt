@@ -1,9 +1,61 @@
 1. What is your favourite programming language and why?
 
+Python - I have found that using the Django framework makes it possible for me to quickly
+deliver robust software into the hands of users. It has an incredibly well stocked and documented,
+package eco system making choices around technologies more straightforward and less risky. It is a
+great general purpose tool for delivering a functional application that can be developed and scaled
+with the right care and attention.
+
 2. Which cloud service provider is your favourite and why?
+
+AWS - I have found myself using AWS on the majority of projects.
+For cloud service providers the important things for me are the scale at which they operate,
+i.e. how likely are they to fall over on me, and how easily can I deploy things there?
+AWS are at the top end in regards of size, and offering failover potential as well as enough
+space to scale heavy workloads into.
+Whilst their deployment tooling has not been fantastic, I find that Terraform provides an excellent
+way of abstracting away direct interaction with your cloud service provider.
+They also often tend to lead the way on advancements and keep up with the latest tech..
 
 3. What is your preferred approach to testing software?
 
+Without any context, my belief is somewhat akin to the testing pyramid. Heavy unit test level coverage,
+and decreasing levels of coverage as you move towards full end to end testing.
+I believe tests are vital to creating maintainable and reliable code bases.
+
+I firmly believe that tests should be automated as much as possible. This ensures that they get run
+regularly, removes human error in missing regressions and generally embeds testing in the
+development process. The more end to end testing that can be automated, the more time it will save.
+
+However, in a less than mature product this isn't always the best use of time. If flows are changing often
+or constantly, then spending a lot of time writing fully end to end tests is likely a mistake. Equally,
+if what you're building is a proof of concept that is not designed to be maintained for any length of time
+then I believe there can be a case for a lower degree of testing.
+
 4. Please provide your views and any relevant experience you have with devops, including web and mobile CI/CD:
 
+I have always seen devops as part of my role, and have worked on both architecting but also implementing
+deployments in every role I've been in, primarily with AWS. I see great value in understanding how and where
+the application will be deployed and don't believe I would be as effective as a dev if I didn't take that interest.
+
+Ensuring devs are involved gives added incentive for applications to be built in ways that are easily deployable and reliable once live.
+
+Having dedicated devops personnel can bring valuable insights, and a great opportunity to make deployments
+more automated, better monitored and more robust.
+
+I have extensive experience deploying both front and backend applications to the cloud. Using Ubuntu, Docker, ECS, Kubernetes,
+AWS, Heroku and GCP. I have developed and worked on CI/CD pipelines with Gitlab and Github, and have been involved in developing systems to
+enable continuous delivery within regulated environments (or as close as is possible). These environments have typically enforced
+quality checks such as linters and formatters, run unit and end to end tests, built docker images, pushed docker images and ultimately
+triggered releases into environments.
+
+I have also handled distribution of electron applications, running CI against multiple platforms and ensuring client side
+software gets updated as required.
+
 5. What are the three most important things to you about your next project or role you undertake?
+
+Product focused/data driven - I want to understand why something is happening the way it is, to avoid waste
+and to help find the most effective way of solving a problem and delivering something of value.
+Technically hands on - I enjoy building software and solving technical challenges, both architecturally and in code, and like having an impact.
+Challenging/meaning - I enjoy working in growing areas, most recently bio tech, where the science is ever changing and the data is ever growing.
+Having a subject matter that is itself complex makes it more engaging and makes solving the problems more meaningful.
