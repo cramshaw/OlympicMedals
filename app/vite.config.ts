@@ -13,6 +13,7 @@ export default defineConfig({
     css: true,
   },
   server: {
+    host: true,
     proxy: {
       '/api': "http://localhost:8000"
     }
