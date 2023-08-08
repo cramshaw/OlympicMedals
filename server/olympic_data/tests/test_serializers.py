@@ -1,14 +1,13 @@
 import pytest
 from olympic_data.serializers import CountryMedalSerializer
-from olympic_data.tests.factories import CountryFactory
-from olympic_data.tests.factories import MedalWinFactory
+from olympic_data.tests.factories import CountryFactory, MedalWinFactory
 from olympic_data.views import MedalTableView
 
 
 @pytest.mark.django_db
 def test_country_medal_serializer():
     YEAR = 2012
-    country = CountryFactory()
+    country = CountryFactory(population=100)
 
     MedalWinFactory.create_batch(
         1, country=country, medal_type="GOLD", games__year=YEAR
@@ -33,3 +32,6 @@ def test_country_medal_serializer():
     assert serializer.data[0]["gold_medal_count"] == 1
     assert serializer.data[0]["silver_medal_count"] == 2
     assert serializer.data[0]["bronze_medal_count"] == 1
+    assert serializer.data[0]["population_per_gold_medal"] == 100
+    assert serializer.data[0]["population_per_silver_medal"] == 50
+    assert serializer.data[0]["population_per_bronze_medal"] == 100

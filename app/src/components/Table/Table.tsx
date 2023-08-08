@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import EnhancedTableHead from '../TableHead/TableHead';
 import getUnicodeFlagIcon from 'country-flag-icons/unicode';
+import React, { useState } from 'react';
+import EnhancedTableHead from '../TableHead/TableHead';
 import flagMap from './flagMap.json';
 
 // Our country codes don't quite match up so we have a mapping file
@@ -19,6 +19,9 @@ export type CountryData = {
   gold_medal_count: number;
   silver_medal_count: number;
   bronze_medal_count: number;
+  population_per_gold_medal: number;
+  population_per_silver_medal: number;
+  population_per_bronze_medal: number;
 };
 
 export type SortOrder = 'asc' | 'desc';
@@ -75,6 +78,15 @@ const EnhancedTable: React.FC<EnhancedTableProps> = ({ data }) => {
                     </TableCell>
                     <TableCell align="right">
                       {row.bronze_medal_count}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.population_per_gold_medal}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.population_per_silver_medal}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.population_per_bronze_medal}
                     </TableCell>
                   </TableRow>
                 );

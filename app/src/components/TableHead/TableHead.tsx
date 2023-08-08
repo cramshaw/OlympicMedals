@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
 import Box from '@mui/material/Box';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import TableCell from '@mui/material/TableCell';
 
@@ -60,6 +60,27 @@ export const headCells: readonly HeadCell[] = [
     numeric: true,
     disablePadding: false,
     label: 'Bronze',
+  },
+  {
+    id: 'population_per_gold_medal',
+    sortable: false,
+    numeric: true,
+    disablePadding: false,
+    label: 'Pop per gold',
+  },
+  {
+    id: 'population_per_silver_medal',
+    sortable: false,
+    numeric: true,
+    disablePadding: false,
+    label: 'Pop per silver',
+  },
+  {
+    id: 'population_per_bronze_medal',
+    sortable: false,
+    numeric: true,
+    disablePadding: false,
+    label: 'Pop per bronze',
   },
 ];
 
